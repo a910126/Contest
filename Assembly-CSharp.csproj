@@ -37,8 +37,8 @@
   </PropertyGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\Cameras\CamControll.cs" />
-     <Compile Include="Assets\Scripts\Cameras\First.cs" />
-     <Compile Include="Assets\Scripts\Cameras\Third.cs" />
+     <Compile Include="Assets\Scripts\Cameras\Transition.cs" />
+     <Compile Include="Assets\Scripts\ColliderTransition.cs" />
      <Compile Include="Assets\Scripts\Main.cs" />
      <Compile Include="Assets\Scripts\ProjectBase\AStar\AStarMgr.cs" />
      <Compile Include="Assets\Scripts\ProjectBase\AStar\AStarNode.cs" />
@@ -591,6 +591,9 @@
     <Reference Include="Unity.Timeline.Editor">
         <HintPath>C:/Users/wen/Desktop/minigame/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Cinemachine">
+        <HintPath>C:/Users/wen/Desktop/minigame/Library/ScriptAssemblies/Cinemachine.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.VSCode.Editor">
         <HintPath>C:/Users/wen/Desktop/minigame/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
     </Reference>
@@ -609,17 +612,14 @@
     <Reference Include="Unity.Rider.Editor">
         <HintPath>C:/Users/wen/Desktop/minigame/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="com.unity.cinemachine.editor">
+        <HintPath>C:/Users/wen/Desktop/minigame/Library/ScriptAssemblies/com.unity.cinemachine.editor.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.TextMeshPro">
         <HintPath>C:/Users/wen/Desktop/minigame/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.UI">
         <HintPath>C:/Users/wen/Desktop/minigame/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="Cinemachine">
-        <HintPath>C:/Users/wen/Desktop/minigame/Library/ScriptAssemblies/Cinemachine.dll</HintPath>
-    </Reference>
-    <Reference Include="com.unity.cinemachine.editor">
-        <HintPath>C:/Users/wen/Desktop/minigame/Library/ScriptAssemblies/com.unity.cinemachine.editor.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

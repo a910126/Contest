@@ -17,7 +17,7 @@ public class Player : RoleBase
     {
         AddController();  //开启监控器
 
-        C = Camera.main.gameObject;  //得到主摄像机
+        // C = Camera.main.gameObject;  //得到主摄像机
 
         Movespeed = 5;  //移动速度
 
@@ -63,7 +63,7 @@ public class Player : RoleBase
     /// </summary>
     protected void Rotate()
     {
-        this.transform.Rotate(Input.GetAxis("Mouse X") * Time.deltaTime * Rotatespeed * this.transform.up);
+        // this.transform.Rotate(Input.GetAxis("Mouse X") * Time.deltaTime * Rotatespeed * this.transform.up);
     }
 
     #endregion
@@ -112,13 +112,13 @@ public class Player : RoleBase
                 IsFirst = !IsFirst;
                 if (IsFirst)
                 {
-                    C.GetComponent<First>().enabled=true;
-                    C.GetComponent<Third>().enabled = false;
+                    // C.GetComponent<First>().enabled=true;
+                    // C.GetComponent<Third>().enabled = false;
                 }
                 else
                 {
-                    C.GetComponent<First>().enabled = false;
-                    C.GetComponent<Third>().enabled = true;
+                    // C.GetComponent<First>().enabled = false;
+                    // C.GetComponent<Third>().enabled = true;
                 }
                 break;
         }

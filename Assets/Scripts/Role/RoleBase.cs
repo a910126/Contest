@@ -25,6 +25,21 @@ public abstract class RoleBase :MonoBehaviour  //所有人物的基类
     protected float Rotatespeed;
 
     /// <summary>
+    /// 是否死亡
+    /// </summary>
+    public bool IsDead;
+
+    /// <summary>
+    /// 得到自己身上的Animation脚本
+    /// </summary>
+    //protected Animator animatior;
+    
+    //void Awake()
+    //{
+    //    animatior=this.gameObject.GetComponent<Animator>();
+    //}
+
+    /// <summary>
     /// 人物移动
     /// </summary>
     protected abstract void Move();

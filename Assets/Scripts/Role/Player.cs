@@ -124,14 +124,14 @@ public class Player : RoleBase
 
 void OnTwo(){
         currentState = State.b;
-        print("qiehuan 111");
+        //print("qiehuan 111");
     }
 
     // 当摄像机优先级改变时执行的方法
     void Onthree()
     {
         currentState = State.a;
-        print("qiehuan 222");
+        //print("qiehuan 222");
     }
 
 

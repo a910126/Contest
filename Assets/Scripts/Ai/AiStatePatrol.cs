@@ -6,11 +6,12 @@ public class AiStatePatrol : AiStateBase
 {
     public AiStatePatrol(AiLogic logic) : base(logic)
     {
-    }
+
+     }
 
     public override void EnterAiState()
     {
-        
+        Debug.Log("巡逻");
     }
 
     public override void ExitAiState()
@@ -20,7 +21,8 @@ public class AiStatePatrol : AiStateBase
 
     public override void UpdateAiState()
     {
-        
+        //logic.monster.Move(logic.monster.BornPos, logic.monster.Patrol1);
+        logic.monster.Move(logic.monster.BornPos, logic.monster.Patrol1);
     }
 
 }

@@ -6,19 +6,25 @@ public class Monster1_ShortRange : RoleBase
 {
     private AiLogic Ai;
 
-    void Awake()
+    protected override void Awake()
     {
-        Ai = new AiLogic(this as RoleBase);
+        Ai = new AiLogic(this);
+        this.Movespeed = 3;
+        this.BornPos = new Vector3(0, 1, 0);
     }
     void Start()
     {
-        Atk();
+        //Atk();
+        Move(BornPos, Patrol1);
     }
 
-    void Update()
+    protected override void Update()
     {
+        base.Update();
         Ai.UpdateState();
     }
+
+
     public override void Atk()
     {    
         //int temp = Random.Range(0,101);
@@ -31,7 +37,7 @@ public class Monster1_ShortRange : RoleBase
         //{
         //    Atk2();
         //}
-        Atk2();
+        Atk1();
     }
 
     public override void Hurt()
@@ -39,15 +45,10 @@ public class Monster1_ShortRange : RoleBase
         
     }
 
-    protected override void Move()
-    {
-        
-    }
-
-
     private void Atk1()  //攻击方式1 点式攻击
     {
         //animation.Play();
+        print("攻击");
         Collider[] collider = Physics.OverlapBox(this.gameObject.transform.position + this.gameObject.transform.forward, new Vector3(1, 1, 1), Quaternion.identity, 1 << LayerMask.NameToLayer("Player"));
         for(int i = 0; i < collider.Length; i++)       
         {

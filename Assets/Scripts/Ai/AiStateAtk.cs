@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class AiStateAtk : AiStateBase
 {
+    private float AtkTime=2;  //攻击间隔时间
+    private float NextAtk = 0;  //下次攻击时间
+
     public AiStateAtk(AiLogic logic) : base(logic)
     {
     }
@@ -20,6 +23,11 @@ public class AiStateAtk : AiStateBase
 
     public override void UpdateAiState()
     {
+        if (Time.time >= NextAtk)
+        {
+            logic.monster.Atk();
+            NextAtk = Time.time + AtkTime;
+        }
         
     }
 

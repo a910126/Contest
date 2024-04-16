@@ -30,19 +30,65 @@ public abstract class RoleBase :MonoBehaviour  //所有人物的基类
     public bool IsDead;
 
     /// <summary>
+    /// 移动方向
+    /// </summary>
+    protected Vector3 MoveDic;
+
+    /// <summary>
+    /// 出生点
+    /// </summary>
+    public Vector3 BornPos;
+
+    /// <summary>
+    /// 巡逻点1
+    /// </summary>
+    public Vector3 Patrol1;
+
+    /// <summary>
+    /// 巡逻点2
+    /// </summary>
+    public Vector3 Patrol2;
+
+    /// <summary>
+    /// 巡逻点3
+    /// </summary>
+    public Vector3 Patrol3;
+
+    /// <summary>
+    /// 巡逻点4
+    /// </summary>
+    public Vector3 Patrol4;
+
+    /// <summary>
     /// 得到自己身上的Animation脚本
     /// </summary>
     //protected Animator animatior;
-    
-    //void Awake()
-    //{
-    //    animatior=this.gameObject.GetComponent<Animator>();
-    //}
+
+    protected virtual void Awake()
+    {
+        //animatior = this.gameObject.GetComponent<Animator>();
+        Patrol1 = BornPos + new Vector3(0,0,-10);
+        Patrol2 = BornPos + new Vector3(10, 0, -10);
+        Patrol3 = BornPos + new Vector3(10, 0, 10);
+        Patrol4 = BornPos + new Vector3(0, 0, 10);
+    }
+
+    protected virtual void Update()
+    {
+        //print(MoveDic);
+        this.gameObject.transform.Translate(MoveDic * Time.deltaTime * Movespeed);  //怪物的移动
+    }
+
 
     /// <summary>
-    /// 人物移动
+    /// 怪物的移动
     /// </summary>
-    protected abstract void Move();
+    /// <param name="FirstPos"></param>
+    /// <param name="SecondPos"></param>
+    public void Move(Vector3 FirstPos, Vector3 SecondPos)
+    {
+        MoveDic = (SecondPos - FirstPos).normalized;
+    }
 
     /// <summary>
     /// 人物死亡

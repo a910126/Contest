@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class Player : RoleBase
 {
-
     private enum State
     {
         a=2,
@@ -29,7 +28,7 @@ public class Player : RoleBase
 
     
 
-    void Awake()
+    protected override void Awake()
     {
         AddController();  //开启监控器
 
@@ -47,13 +46,12 @@ public class Player : RoleBase
     {
        
     }
-    void Update()
+
+    protected override void Update()
     {
         Move();  //移动
 
         Rotate();  //转动
-
-      
     }
 
     #region 攻击
@@ -71,7 +69,7 @@ public class Player : RoleBase
     #endregion
 
     #region 移动
-    protected override void Move()
+    protected  void Move()
     {
         // 获取基于屏幕的方向移动输入
         float horizontal = Input.GetAxis("Horizontal"); // A和D键

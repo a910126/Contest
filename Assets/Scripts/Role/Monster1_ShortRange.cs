@@ -8,14 +8,16 @@ public class Monster1_ShortRange : RoleBase
 
     protected override void Awake()
     {
-        Ai = new AiLogic(this);
-        this.Movespeed = 3;
+        this.Movespeed = 10;
         this.BornPos = new Vector3(0, 1, 0);
+        base.Awake();
+        Ai = new AiLogic(this);    
+       
     }
     void Start()
     {
         //Atk();
-        Move(BornPos, Patrol1);
+        
     }
 
     protected override void Update()
@@ -24,6 +26,10 @@ public class Monster1_ShortRange : RoleBase
         Ai.UpdateState();
     }
 
+    public override void Move(Vector3 FirstPos, Vector3 SecondPos)
+    {
+        base.Move(FirstPos, SecondPos);
+    }
 
     public override void Atk()
     {    

@@ -69,7 +69,7 @@ public class Player : RoleBase
     #endregion
 
     #region 移动
-    protected  void Move()
+    protected void Move()
     {
         // 获取基于屏幕的方向移动输入
         float horizontal = Input.GetAxis("Horizontal"); // A和D键

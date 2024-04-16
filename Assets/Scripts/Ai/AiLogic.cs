@@ -27,7 +27,7 @@ public enum E_State
 }
 public class AiLogic 
 {
-    public Monster1_ShortRange monster;
+    public RoleBase monster;
 
     public E_State nowstate=E_State.NULL;
 
@@ -36,7 +36,7 @@ public class AiLogic
     private Dictionary<E_State,AiStateBase> stateDic=new Dictionary<E_State,AiStateBase>();
 
     public AiStateBase nowAistate;  //当前Ai逻辑
-    public AiLogic(Monster1_ShortRange monster) 
+    public AiLogic(RoleBase monster) 
     {
         this.monster = monster;
         stateDic.Add(E_State.PATROL, new AiStatePatrol(this));

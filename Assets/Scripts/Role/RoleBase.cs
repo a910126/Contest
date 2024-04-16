@@ -42,22 +42,24 @@ public abstract class RoleBase :MonoBehaviour  //所有人物的基类
     /// <summary>
     /// 巡逻点1
     /// </summary>
-    public Vector3 Patrol1;
+    private Vector3 Patrol1;
 
     /// <summary>
     /// 巡逻点2
     /// </summary>
-    public Vector3 Patrol2;
+    private Vector3 Patrol2;
 
     /// <summary>
     /// 巡逻点3
     /// </summary>
-    public Vector3 Patrol3;
+    private Vector3 Patrol3;
 
     /// <summary>
     /// 巡逻点4
     /// </summary>
-    public Vector3 Patrol4;
+    private Vector3 Patrol4;
+
+    public Vector3[] Patrols;
 
     /// <summary>
     /// 得到自己身上的Animation脚本
@@ -71,6 +73,8 @@ public abstract class RoleBase :MonoBehaviour  //所有人物的基类
         Patrol2 = BornPos + new Vector3(10, 0, -10);
         Patrol3 = BornPos + new Vector3(10, 0, 10);
         Patrol4 = BornPos + new Vector3(0, 0, 10);
+        //Debug.Log(Patrol1);
+        Patrols = new Vector3[4] {Patrol1, Patrol2, Patrol3, Patrol4};
     }
 
     protected virtual void Update()
@@ -85,7 +89,13 @@ public abstract class RoleBase :MonoBehaviour  //所有人物的基类
     /// </summary>
     /// <param name="FirstPos"></param>
     /// <param name="SecondPos"></param>
-    public void Move(Vector3 FirstPos, Vector3 SecondPos)
+    //public void Move(Vector3 FirstPos, Vector3 SecondPos)
+    //{
+
+    //    MoveDic = (SecondPos - FirstPos).normalized;
+    //}
+
+    public virtual void Move(Vector3 FirstPos,Vector3 SecondPos)
     {
         MoveDic = (SecondPos - FirstPos).normalized;
     }

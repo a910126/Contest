@@ -24,6 +24,22 @@ public abstract class RoleBase :MonoBehaviour  //所有人物的基类
     /// </summary>
     protected float Rotatespeed;
 
+
+    /// <summary>
+    /// 怪物的视野范围
+    /// </summary>
+    public float MonsterRange;
+
+    /// <summary>
+    /// 距离Player多少去攻击
+    /// </summary>
+    public float DisToAtk;
+
+    /// <summary>
+    /// 距离BornPos多少回BornPos
+    /// </summary>
+    public float DisToBack;
+
     /// <summary>
     /// 是否死亡
     /// </summary>
@@ -33,6 +49,11 @@ public abstract class RoleBase :MonoBehaviour  //所有人物的基类
     /// 移动方向
     /// </summary>
     protected Vector3 MoveDic;
+
+    /// <summary>
+    /// 玩家的位置
+    /// </summary>
+    public Vector3 PlayerPos;
 
     /// <summary>
     /// 出生点
@@ -59,6 +80,9 @@ public abstract class RoleBase :MonoBehaviour  //所有人物的基类
     /// </summary>
     private Vector3 Patrol4;
 
+    /// <summary>
+    /// 巡逻点的数组
+    /// </summary>
     public Vector3[] Patrols;
 
     /// <summary>
@@ -79,7 +103,8 @@ public abstract class RoleBase :MonoBehaviour  //所有人物的基类
 
     protected virtual void Update()
     {
-        //print(MoveDic);
+
+        PlayerPos = GameObject.Find("Player").transform.position;
         this.gameObject.transform.Translate(MoveDic * Time.deltaTime * Movespeed);  //怪物的移动
     }
 
@@ -89,15 +114,17 @@ public abstract class RoleBase :MonoBehaviour  //所有人物的基类
     /// </summary>
     /// <param name="FirstPos"></param>
     /// <param name="SecondPos"></param>
-    //public void Move(Vector3 FirstPos, Vector3 SecondPos)
-    //{
-
-    //    MoveDic = (SecondPos - FirstPos).normalized;
-    //}
-
     public virtual void Move(Vector3 FirstPos,Vector3 SecondPos)
     {
         MoveDic = (SecondPos - FirstPos).normalized;
+    }
+
+    /// <summary>
+    /// 停止移动
+    /// </summary>
+    public virtual void StopMove()
+    {
+        MoveDic = Vector3.zero;
     }
 
     /// <summary>

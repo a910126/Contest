@@ -13,7 +13,7 @@ public class AiStateAtk : AiStateBase
 
     public override void EnterAiState()
     {
-        
+        Debug.Log("进入攻击状态");
     }
 
     public override void ExitAiState()

@@ -2,10 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : RoleBase
 {
-    private enum State
+    private enum State//23d状态
     {
         a=2,
         b=3
@@ -19,24 +20,34 @@ public class Player : RoleBase
     private bool IsFirst=true;
     public ColliderTransition[] colliderTransition;
     public CharacterController characterController;
+
+    public LaserController laserController;
+
     /// <summary>
     /// 得到摄像机
     /// </summary>
-    private GameObject C;
     public  Camera myCam;
     public GameObject lineShooter;
 
-    
+    public GameObject uiWeaponIndicator; // UI武器指示器
 
+    public GameObject ui23dTransform; // 3D模式下的UI元素
+    private bool isLaserMode = false; // 当前是否是激光模式
+
+    public Image hpImage; // 血条图片
+
+    
     protected override void Awake()
     {
         AddController();  //开启监控器
 
          characterController=GetComponent<CharacterController>();
 
-        Movespeed = 5;  //移动速度
-
+         laserController=GetComponent<LaserController>();
+        Movespeed = 8;  //移动速度
         Rotatespeed = 30;  //转动速度
+        IsDead = false;
+        Hp = 100;      // 假设玩家的初始血量是100
     }
     void Start()
     {
@@ -52,21 +63,119 @@ public class Player : RoleBase
         Move();  //移动
 
         Rotate();  //转动
+
+        Atk();  //攻击
+
+        hpImage.fillAmount=Hp/100f;  // 更新血条
     }
 
     #region 攻击
     public override void Atk()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Q)&&!isShooting) // 检测玩家是否按下了Q键
+        {
+            SwitchWeaponMode(); // 切换武器模式
+        }
+
+        // 根据当前模式调用相应的攻击方法
+        if (isLaserMode)
+        {
+            LaserAtk();
+        }
+        else
+        {
+            BulletAtk();
+        }
     }
+
+    private void SwitchWeaponMode()
+    {
+        isLaserMode = !isLaserMode; // 切换模式
+        UpdateUIWeaponIndicator(); // 更新UI指示器
+    }
+
+    private void UpdateUIWeaponIndicator()
+    {
+        if (uiWeaponIndicator != null)
+        {
+            // 根据当前模式设置UI指示器的文本或图标
+            string indicatorText = isLaserMode ? "Laser" : "Bullet";
+            uiWeaponIndicator.GetComponent<Text>().text = indicatorText;
+        }
+    }
+
+    private bool isShooting = false; // 是否正在射击
+    private float shootingInterval = 0.5f; // 射击间隔
+
+    public void BulletAtk()
+    {
+        print("武器换成子弹");
+        laserController.enabled = false;
+
+        if (Input.GetMouseButtonDown(0)) // 检测玩家是否点击了鼠标左键
+        {
+            isShooting = true;
+            StartCoroutine(ShootBullets());
+        }
+
+        if (Input.GetMouseButtonUp(0)) // 检测玩家是否释放了鼠标左键
+        {
+            isShooting = false;
+        }
+    }
+
+    private IEnumerator ShootBullets()
+    {
+        while (isShooting)
+        {
+            PoolMgr.GetInstance().GetObj("prefabs/Bullet", (bullet) =>
+            { // 从PoolMgr中获取一个子弹
+                bullet.transform.position = lineShooter.transform.position; // 设置子弹的位置与玩家相同
+                bullet.transform.rotation = lineShooter.transform.rotation; // 设置子弹的方向与玩家相同                
+            });
+
+            yield return new WaitForSeconds(shootingInterval); // 等待射击间隔
+        }
+    }
+    public void LaserAtk()
+    {
+        print("武器换成激光");
+       laserController.enabled=true;
+    }
+
+
     #endregion
 
     #region 受伤
     public override void Hurt()
     {
-        
+        int damage = 20;  // 假设伤害值为20
+        Hp -= damage;  // 计算扣除防御力后的实际伤害
+        if (Hp <= 0)
+        {
+            Dead();  // 调用死亡方法
+        }
+    }
+
+
+    public void Hurt(int damage)
+    {
+        Hp -= damage;  // 计算扣除防御力后的实际伤害
+        if (Hp <= 0)
+        {
+            Dead();  // 调用死亡方法
+        }
     }
     #endregion
+
+#region 玩家死亡
+    public override void Dead()
+    {
+        IsDead = true;
+        Debug.Log("Player is dead.");
+    }
+
+#endregion
 
     #region 移动
     protected void Move()
@@ -97,6 +206,8 @@ public class Player : RoleBase
         // 应用移动
         characterController.Move(movement.normalized * Movespeed * Time.deltaTime);
 
+        
+
     }
     #endregion
 
@@ -111,14 +222,16 @@ public class Player : RoleBase
         {
             case State.a:
                 TowD();
+                ui23dTransform.GetComponent<Text>().text = "2D";
                 break;
             case State.b:
                 ThreeD();
+                ui23dTransform.GetComponent<Text>().text = "3D";
                 break;
         }
     }
 
-    #endregion
+ 
 
 void OnTwo(){
         currentState = State.b;
@@ -165,7 +278,10 @@ void OnTwo(){
             transform.rotation = Quaternion.Euler(0, 90, 0);
         }
     }
-    
+
+
+    #endregion
+
     #region 监控器
 
     /// <summary>

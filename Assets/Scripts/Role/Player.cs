@@ -109,7 +109,7 @@ public class Player : RoleBase
 
     public void BulletAtk()
     {
-        print("武器换成子弹");
+        //print("武器换成子弹");
         laserController.enabled = false;
 
         if (Input.GetMouseButtonDown(0)) // 检测玩家是否点击了鼠标左键

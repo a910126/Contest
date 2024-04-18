@@ -181,7 +181,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 147350731}
   m_LocalRotation: {x: 0.3348753, y: 0.39121953, z: -0.15540841, w: 0.843003}
-  m_LocalPosition: {x: -54.707615, y: 70.85829, z: -46.64535}
+  m_LocalPosition: {x: -76.12509, y: 70.85829, z: -46.64834}
   m_LocalScale: {x: 1.0000001, y: 1, z: 1.0000001}
   m_Children:
   - {fileID: 1620259494}
@@ -444,11 +444,11 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.001
-  far clip plane: 1001.15
-  field of view: 80
+  near clip plane: 0.3
+  far clip plane: 1000
+  field of view: 60.64
   orthographic: 1
-  orthographic size: 15.35
+  orthographic size: 5.25
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -485,8 +485,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 615795916}
-  m_LocalRotation: {x: 0.3348753, y: 0.39121953, z: -0.15540841, w: 0.843003}
-  m_LocalPosition: {x: -54.707615, y: 70.85829, z: -46.64535}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -19.15, y: 2.62, z: -8.57}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -992,7 +992,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1181704949}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.27, y: 2.62, z: -8.57}
+  m_LocalPosition: {x: -19.15, y: 2.62, z: -8.57}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1264835213}
@@ -1251,6 +1251,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 1833746564988402, guid: f2e75baaa7141d1459b20bb0c1140221, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 223036587299658560, guid: f2e75baaa7141d1459b20bb0c1140221,
         type: 3}
       propertyPath: m_Camera
@@ -1499,7 +1503,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 250c0ae311621c5429e4eae843fb9530, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MonsterRange: 0
+  DisToAtk: 0
+  DisToBack: 0
   IsDead: 0
+  PlayerPos: {x: 0, y: 0, z: 0}
   BornPos: {x: 0, y: 0, z: 0}
   Patrols: []
 --- !u!1001 &1498264552
@@ -1512,6 +1520,10 @@ PrefabInstance:
     - target: {fileID: 1145598752367304, guid: dc636f4d3c3c82e43bfe3d6553c1383a, type: 3}
       propertyPath: m_Name
       value: EventSystem
+      objectReference: {fileID: 0}
+    - target: {fileID: 1145598752367304, guid: dc636f4d3c3c82e43bfe3d6553c1383a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4652244556296870, guid: dc636f4d3c3c82e43bfe3d6553c1383a, type: 3}
       propertyPath: m_RootOrder
@@ -2234,7 +2246,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d5003b36c615204887c98e587fef474, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MonsterRange: 0
+  DisToAtk: 0
+  DisToBack: 0
   IsDead: 0
+  PlayerPos: {x: 0, y: 0, z: 0}
   BornPos: {x: 0, y: 0, z: 0}
   Patrols: []
   colliderTransition:
@@ -2270,7 +2286,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2111917964}
   m_LocalRotation: {x: 0, y: 0.0020944288, z: 0, w: 0.99999785}
-  m_LocalPosition: {x: 2.27, y: 0.85, z: 1.43}
+  m_LocalPosition: {x: -19.15, y: 0.85, z: 1.43}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2069451403}

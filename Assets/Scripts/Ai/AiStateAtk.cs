@@ -23,13 +23,31 @@ public class AiStateAtk : AiStateBase
 
     public override void UpdateAiState()
     {
+            AtkForward();
+            
+    }
+
+    private void AtkForward()  //攻击间隔
+    {
         if (Time.time >= NextAtk)
         {
             logic.monster.Atk();
             NextAtk = Time.time + AtkTime;
         }
-        
+        OutOfRange();
     }
 
+    private void OutOfRange()  //超出攻击范围
+    {
+        float temp = Vector3.Distance(logic.monster.transform.position, logic.monster.PlayerPos);
+        if (temp >= logic.monster.DisToAtk)
+            MonoMgr.GetInstance().StartCoroutine(WaitTime());
+    }
+
+    private IEnumerator WaitTime()
+    {
+        yield return new WaitForSeconds(0.5f);
+        logic.ChangeState(E_State.MOVE);
+    }
 
 }

@@ -37,12 +37,10 @@ public class AiStateMove : AiStateBase
     private void PrepareBack()  //距离BornPos指定距离回到BornPos
     {
         float temp = Vector3.Distance(logic.monster.transform.position, logic.monster.BornPos);
-        Debug.Log(temp + "距离");
-        if (temp <= logic.monster.DisToBack)
+        //Debug.Log(temp + "距离");
+        if (temp >= logic.monster.DisToBack)
         {
-            Debug.Log("回去");
-            logic.monster.Move(logic.monster.transform.position, logic.monster.BornPos);
-            
+            logic.ChangeState(E_State.BACK); 
         }
     }
 }

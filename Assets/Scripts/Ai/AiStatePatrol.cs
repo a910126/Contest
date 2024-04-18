@@ -15,14 +15,13 @@ public class AiStatePatrol : AiStateBase
 
     public override void EnterAiState()
     {
-        Debug.Log("进入巡逻");
+        Debug.Log("进入巡逻状态");
         logic.monster.Move(logic.monster.BornPos, logic.monster.Patrols[temp]);
     }
 
     public override void ExitAiState()
     {
         logic.monster.StopMove();
-        Debug.Log("退出巡逻状态，进入追击状态");
     }
 
     public override void UpdateAiState()

@@ -128,7 +128,7 @@ public class Player : RoleBase
     {
         while (isShooting)
         {
-            PoolMgr.GetInstance().GetObj("prefabs/Bullet", (bullet) =>
+            PoolMgr.GetInstance().GetObj("Prefabs/Bullets/Bullet", (bullet) =>
             { // 从PoolMgr中获取一个子弹
                 bullet.transform.position = lineShooter.transform.position; // 设置子弹的位置与玩家相同
                 bullet.transform.rotation = lineShooter.transform.rotation; // 设置子弹的方向与玩家相同                

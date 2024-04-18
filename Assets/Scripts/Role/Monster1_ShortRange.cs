@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class Monster1_ShortRange : RoleBase
 {
-    private AiLogic Ai;
-
     protected override void Awake()
     {
         this.Movespeed = 10;
         this.MonsterRange = 10;
         this.DisToAtk = 2;
         this.DisToBack = 20;
-        this.BornPos = new Vector3(0, 1, 0);
+        this.AtkTime = 2;
+        this.BornPos = new Vector3(0, 10, 0);
         base.Awake();
         Ai = new AiLogic(this);    
        

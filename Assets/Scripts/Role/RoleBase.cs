@@ -24,6 +24,10 @@ public abstract class RoleBase :MonoBehaviour  //所有人物的基类
     /// </summary>
     protected float Rotatespeed;
 
+    /// <summary>
+    /// 攻击间隔时间
+    /// </summary>
+    public float AtkTime;
 
     /// <summary>
     /// 怪物的视野范围
@@ -86,6 +90,11 @@ public abstract class RoleBase :MonoBehaviour  //所有人物的基类
     public Vector3[] Patrols;
 
     /// <summary>
+    /// 怪物的Ai
+    /// </summary>
+    protected AiLogic Ai;
+
+    /// <summary>
     /// 得到自己身上的Animation脚本
     /// </summary>
     //protected Animator animatior;
@@ -97,17 +106,17 @@ public abstract class RoleBase :MonoBehaviour  //所有人物的基类
         Patrol2 = BornPos + new Vector3(10, 0, -10);
         Patrol3 = BornPos + new Vector3(10, 0, 10);
         Patrol4 = BornPos + new Vector3(0, 0, 10);
-        //Debug.Log(Patrol1);
         Patrols = new Vector3[4] {Patrol1, Patrol2, Patrol3, Patrol4};
     }
 
     protected virtual void Update()
     {
-
         PlayerPos = GameObject.Find("Player").transform.position;
         this.gameObject.transform.Translate(MoveDic * Time.deltaTime * Movespeed);  //怪物的移动
-    }
 
+        if (Ai != null)
+            Ai.UpdateState();
+    }
 
     /// <summary>
     /// 怪物的移动
@@ -144,4 +153,29 @@ public abstract class RoleBase :MonoBehaviour  //所有人物的基类
     /// 人物攻击
     /// </summary>
     public abstract void Atk();
+
+    protected void CreatePrefab(string name,Vector3 pos)  //动态加载
+    {
+        PoolMgr.GetInstance().GetObj(JudgePrefab(name), (GameObject obj) =>
+         {
+             obj.transform.position = pos;    
+         });
+    }
+    private string JudgePrefab(string name)  //判断Prefab类型
+    {
+        string pack = null;
+        switch (name)
+        {
+            case "Player_Bullet":
+                break;
+            case "Monster2_Bullet":
+                pack = "Prefabs/Bullets/" + name;
+                break;
+            case "Monster3_Bullet":
+                break;
+            case "Monster4_Bullet":
+                break;
+        }
+        return pack;
+    }
 }

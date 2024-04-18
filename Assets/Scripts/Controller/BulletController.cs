@@ -25,7 +25,7 @@ public class BulletController : MonoBehaviour
         if (timer >= 5) // 如果子弹被取出5秒后
         {
             timer = 0; // 重置计时器
-            PoolMgr.GetInstance().PushObj("prefabs/Bullet", gameObject); // 将子弹回收到对象池中
+            PoolMgr.GetInstance().PushObj("Prefabs/Bullets/Bullet", gameObject); // 将子弹回收到对象池中
         }
     }
 

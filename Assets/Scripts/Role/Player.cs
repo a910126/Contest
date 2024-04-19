@@ -128,12 +128,12 @@ public class Player : RoleBase
     {
         while (isShooting)
         {
-            PoolMgr.GetInstance().GetObj("Prefabs/Bullets/Bullet", (bullet) =>
-            { // 从PoolMgr中获取一个子弹
-                bullet.transform.position = lineShooter.transform.position; // 设置子弹的位置与玩家相同
-                bullet.transform.rotation = lineShooter.transform.rotation; // 设置子弹的方向与玩家相同                
-            });
-
+            //PoolMgr.GetInstance().GetObj("Prefabs/Bullets/Bullet", (bullet) =>
+            //{ // 从PoolMgr中获取一个子弹
+            //    bullet.transform.position = lineShooter.transform.position; // 设置子弹的位置与玩家相同
+            //    bullet.transform.rotation = lineShooter.transform.rotation; // 设置子弹的方向与玩家相同                
+            //});
+            CreatePrefab("Player_Bullet", lineShooter.transform.position);
             yield return new WaitForSeconds(shootingInterval); // 等待射击间隔
         }
     }
@@ -168,7 +168,7 @@ public class Player : RoleBase
     }
     #endregion
 
-#region 玩家死亡
+    #region 玩家死亡
     public override void Dead()
     {
         IsDead = true;

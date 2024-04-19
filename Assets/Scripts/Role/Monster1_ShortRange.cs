@@ -7,6 +7,7 @@ public class Monster1_ShortRange : RoleBase
     protected override void Awake()
     {
         this.Movespeed = 10;
+        this.Rotatespeed = 10;
         this.MonsterRange = 10;
         this.DisToAtk = 2;
         this.DisToBack = 20;

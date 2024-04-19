@@ -36,7 +36,7 @@ public class BulletBase : MonoBehaviour
 
     private void Move()  //子弹的移动
     {
-        this.transform.Translate(-this.gameObject.transform.right * Time.deltaTime * Speed);
+        this.transform.Translate(this.gameObject.transform.forward * Time.deltaTime * Speed);
     }
     public void Destory()  //子弹的销毁
     {

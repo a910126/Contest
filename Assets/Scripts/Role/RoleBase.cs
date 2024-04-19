@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 
 public abstract class RoleBase :MonoBehaviour  //所有人物的基类
@@ -129,6 +131,14 @@ public abstract class RoleBase :MonoBehaviour  //所有人物的基类
     }
 
     /// <summary>
+    /// 怪物的转动
+    /// </summary>
+    public virtual void Rotate()
+    {
+        
+    }
+
+    /// <summary>
     /// 停止移动
     /// </summary>
     public virtual void StopMove()
@@ -154,11 +164,16 @@ public abstract class RoleBase :MonoBehaviour  //所有人物的基类
     /// </summary>
     public abstract void Atk();
 
-    protected void CreatePrefab(string name,Vector3 pos)  //动态加载
+    protected void CreatePrefab(string name,Vector3 pos)  //动态加载  预设体名字必须要与脚本名字相同
     {
         PoolMgr.GetInstance().GetObj(JudgePrefab(name), (GameObject obj) =>
          {
-             obj.transform.position = pos;    
+             obj.transform.position = pos;
+             //利用反射去调用  
+             Type type = Type.GetType(name);
+             Component component = obj.GetComponent(type);
+             MethodInfo method = type.GetMethod("Destory");
+             method.Invoke(component,null);
          });
     }
     private string JudgePrefab(string name)  //判断Prefab类型
@@ -167,6 +182,7 @@ public abstract class RoleBase :MonoBehaviour  //所有人物的基类
         switch (name)
         {
             case "Player_Bullet":
+                pack = "Prefabs/Bullets/" + name;
                 break;
             case "Monster2_Bullet":
                 pack = "Prefabs/Bullets/" + name;

@@ -184,6 +184,9 @@ public abstract class RoleBase :MonoBehaviour  //所有人物的基类
             case "Player_Bullet":
                 pack = "Prefabs/Bullets/" + name;
                 break;
+            case "Player_Laser":
+                pack = "Prefabs/Lasers/" + name;
+                    break;
             case "Monster2_Bullet":
                 pack = "Prefabs/Bullets/" + name;
                 break;

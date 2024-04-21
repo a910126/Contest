@@ -181,7 +181,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 147350731}
   m_LocalRotation: {x: 0.3348753, y: 0.39121953, z: -0.15540841, w: 0.843003}
-  m_LocalPosition: {x: -76.12509, y: 70.85829, z: -46.64834}
+  m_LocalPosition: {x: -66.839485, y: 71.008286, z: -46.70241}
   m_LocalScale: {x: 1.0000001, y: 1, z: 1.0000001}
   m_Children:
   - {fileID: 1620259494}
@@ -486,32 +486,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 615795916}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -19.15, y: 2.62, z: -8.57}
+  m_LocalPosition: {x: -9.84, y: 2.77, z: -8.61}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &655633869 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: b8a882adb483a3e459134a29a5e0003d,
-    type: 3}
-  m_PrefabInstance: {fileID: 2069451402}
-  m_PrefabAsset: {fileID: 0}
---- !u!136 &655633870
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 655633869}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.8312675
-  m_Height: 3.8070698
-  m_Direction: 1
-  m_Center: {x: 0, y: 2.6222343, z: 0.07472956}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -992,7 +972,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1181704949}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -19.15, y: 2.62, z: -8.57}
+  m_LocalPosition: {x: -9.84, y: 2.77, z: -8.61}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1264835213}
@@ -1503,6 +1483,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eda5f8b91b50b344fb98cc18cabba499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AtkTime: 0
   MonsterRange: 0
   DisToAtk: 0
   DisToBack: 0
@@ -2227,6 +2208,8 @@ GameObject:
   - component: {fileID: 2111917965}
   - component: {fileID: 2111917972}
   - component: {fileID: 2111917966}
+  - component: {fileID: 2111917967}
+  - component: {fileID: 2111917968}
   m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
@@ -2246,6 +2229,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d5003b36c615204887c98e587fef474, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AtkTime: 0
   MonsterRange: 0
   DisToAtk: 0
   DisToBack: 0
@@ -2278,6 +2262,35 @@ MonoBehaviour:
   laserPrefab: {fileID: 4498824029415518738, guid: 53aaadfa7bc418e4ebb95f8058fa283b,
     type: 3}
   chargeImage: {fileID: 1544438877}
+--- !u!54 &2111917967
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2111917964}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!65 &2111917968
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2111917964}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 3.2489414, z: 1}
+  m_Center: {x: 0, y: 1.1244707, z: 0}
 --- !u!4 &2111917969
 Transform:
   m_ObjectHideFlags: 0
@@ -2285,8 +2298,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2111917964}
-  m_LocalRotation: {x: 0, y: 0.0020944288, z: 0, w: 0.99999785}
-  m_LocalPosition: {x: -19.15, y: 0.85, z: 1.43}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -9.84, y: 1, z: 1.39}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2069451403}
@@ -2295,7 +2308,7 @@ Transform:
   - {fileID: 2067906516}
   m_Father: {fileID: 0}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0.24, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &2111917972
 CharacterController:
   m_ObjectHideFlags: 0
@@ -2305,7 +2318,7 @@ CharacterController:
   m_GameObject: {fileID: 2111917964}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Height: 1
   m_Radius: 0.5

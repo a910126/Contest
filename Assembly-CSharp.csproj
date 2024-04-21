@@ -44,12 +44,15 @@
      <Compile Include="Assets\Scripts\Ai\AiStateMove.cs" />
      <Compile Include="Assets\Scripts\Ai\AiStateNull.cs" />
      <Compile Include="Assets\Scripts\Ai\AiStatePatrol.cs" />
+     <Compile Include="Assets\Scripts\Bullet\BulletBase.cs" />
+     <Compile Include="Assets\Scripts\Bullet\Monster2_Bullet.cs" />
+     <Compile Include="Assets\Scripts\Bullet\Player_Bullet.cs" />
      <Compile Include="Assets\Scripts\Cameras\CamControll.cs" />
      <Compile Include="Assets\Scripts\ColliderTransition.cs" />
      <Compile Include="Assets\Scripts\Controller\BulletController.cs" />
      <Compile Include="Assets\Scripts\Controller\LaserController.cs" />
      <Compile Include="Assets\Scripts\Gamemanager.cs" />
-     <Compile Include="Assets\Scripts\Input\InputMgr.cs" />
+     <Compile Include="Assets\Scripts\Laser\LaserBase.cs" />
      <Compile Include="Assets\Scripts\LineShooter.cs" />
      <Compile Include="Assets\Scripts\Main.cs" />
      <Compile Include="Assets\Scripts\ProjectBase\AStar\AStarMgr.cs" />
@@ -58,6 +61,7 @@
      <Compile Include="Assets\Scripts\ProjectBase\Base\SingletonAutoMono.cs" />
      <Compile Include="Assets\Scripts\ProjectBase\Base\SingletonMono.cs" />
      <Compile Include="Assets\Scripts\ProjectBase\Event\EventCenter.cs" />
+     <Compile Include="Assets\Scripts\ProjectBase\Input\InputMgr.cs" />
      <Compile Include="Assets\Scripts\ProjectBase\Mono\MonoController.cs" />
      <Compile Include="Assets\Scripts\ProjectBase\Mono\MonoMgr.cs" />
      <Compile Include="Assets\Scripts\ProjectBase\Music\MusicMgr.cs" />
@@ -67,6 +71,7 @@
      <Compile Include="Assets\Scripts\ProjectBase\UI\BasePanel.cs" />
      <Compile Include="Assets\Scripts\ProjectBase\UI\UIManager.cs" />
      <Compile Include="Assets\Scripts\Role\Monster1_ShortRange.cs" />
+     <Compile Include="Assets\Scripts\Role\Monster2_LongRange.cs" />
      <Compile Include="Assets\Scripts\Role\Player.cs" />
      <Compile Include="Assets\Scripts\Role\RoleBase.cs" />
     <Reference Include="UnityEngine">

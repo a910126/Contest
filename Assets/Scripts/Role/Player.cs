@@ -36,7 +36,11 @@ public class Player : RoleBase
 
     public Image hpImage; // 血条图片
 
-    
+    private bool isGrounded;
+    private Rigidbody rb;
+
+
+
     protected override void Awake()
     {
         AddController();  //开启监控器
@@ -51,7 +55,7 @@ public class Player : RoleBase
     }
     void Start()
     {
-        
+        rb = GetComponent<Rigidbody>();
     }
     void OnDestroy()
     {
@@ -62,11 +66,14 @@ public class Player : RoleBase
     {
         Move();  //移动
 
+        Jump();  //跳跃
+        
         Rotate();  //转动
 
         Atk();  //攻击
 
         hpImage.fillAmount=Hp/100f;  // 更新血条
+
     }
 
     #region 攻击
@@ -128,12 +135,7 @@ public class Player : RoleBase
     {
         while (isShooting)
         {
-            //PoolMgr.GetInstance().GetObj("Prefabs/Bullets/Bullet", (bullet) =>
-            //{ // 从PoolMgr中获取一个子弹
-            //    bullet.transform.position = lineShooter.transform.position; // 设置子弹的位置与玩家相同
-            //    bullet.transform.rotation = lineShooter.transform.rotation; // 设置子弹的方向与玩家相同                
-            //});
-            CreatePrefab("Player_Bullet", lineShooter.transform.position);
+            CreatePrefab("Player_Bullet", lineShooter.transform.position, Quaternion.LookRotation(lineShooter.transform.forward));
             yield return new WaitForSeconds(shootingInterval); // 等待射击间隔
         }
     }
@@ -180,34 +182,67 @@ public class Player : RoleBase
     #region 移动
     protected void Move()
     {
-        // 获取基于屏幕的方向移动输入
-        float horizontal = Input.GetAxis("Horizontal"); // A和D键
-        float vertical = Input.GetAxis("Vertical"); // W和S键
+        // // 获取基于屏幕的方向移动输入
+        // float horizontal = Input.GetAxis("Horizontal"); // A和D键
+        // float vertical = Input.GetAxis("Vertical"); // W和S键
 
-        // 如果同时按下A和D或者W和S，或者都没有按，则不移动
-        if ((Mathf.Approximately(horizontal, 0f) && Mathf.Approximately(vertical, 0f)) ||
-            (horizontal > 0 && horizontal < 0) ||
-            (vertical > 0 && vertical < 0))
+        // // 如果同时按下A和D或者W和S，或者都没有按，则不移动
+        // if ((Mathf.Approximately(horizontal, 0f) && Mathf.Approximately(vertical, 0f)) ||
+        //     (horizontal > 0 && horizontal < 0) ||
+        //     (vertical > 0 && vertical < 0))
+        // {
+        //     return; // 不执行任何移动
+        // }
+
+        // // 计算移动方向，不改变角色朝向
+        // Vector3 forwardMovement = myCam.transform.forward * vertical;
+        // Vector3 rightMovement = myCam.transform.right * horizontal;
+
+        // // 确保不改变Y轴上的移动量（即，不根据相机的倾斜角度向上或向下移动）
+        // forwardMovement.y = 0;
+        // rightMovement.y = 0;
+
+        // // 应用移动
+        // Vector3 movement = forwardMovement + rightMovement;
+
+        // // 应用移动
+        // characterController.Move(movement.normalized * Movespeed * Time.deltaTime);
+
+
+        float horizontal = Input.GetAxis("Horizontal");
+        float vertical = Input.GetAxis("Vertical");
+
+        // 获取摄像机的方向
+        Vector3 cameraForward = myCam.transform.forward;
+        Vector3 cameraRight = myCam.transform.right;
+
+        // 使摄像机的方向与水平面平行
+        cameraForward.y = 0;
+        cameraRight.y = 0;
+        cameraForward.Normalize();
+        cameraRight.Normalize();
+
+        // 计算移动方向
+        Vector3 moveDirection = horizontal * cameraRight + vertical * cameraForward;
+
+        // 应用移动
+        rb.MovePosition(transform.position + moveDirection * Movespeed *2* Time.deltaTime);
+
+
+    }
+    #endregion
+
+    #region 跳跃
+    protected void Jump()
+    {
+        // 检测玩家是否接触地面
+        isGrounded = Physics.Raycast(transform.position, -Vector3.up, 1f);
+
+        // 如果玩家接触地面并且按下跳跃键，则应用向上的力
+        if (isGrounded && Input.GetButtonDown("Jump"))
         {
-            return; // 不执行任何移动
+            rb.AddForce(Vector3.up * 6, ForceMode.Impulse);
         }
-
-        // 计算移动方向，不改变角色朝向
-        Vector3 forwardMovement = myCam.transform.forward * vertical;
-        Vector3 rightMovement = myCam.transform.right * horizontal;
-
-        // 确保不改变Y轴上的移动量（即，不根据相机的倾斜角度向上或向下移动）
-        forwardMovement.y = 0;
-        rightMovement.y = 0;
-
-        // 应用移动
-        Vector3 movement = forwardMovement + rightMovement;
-
-        // 应用移动
-        characterController.Move(movement.normalized * Movespeed * Time.deltaTime);
-
-        
-
     }
     #endregion
 
@@ -215,7 +250,7 @@ public class Player : RoleBase
     /// <summary>
     /// 转动
     /// </summary>
-    protected void Rotate()
+    public override void Rotate()
     {
         // 根据当前状态执行相应的方法
         switch (currentState)

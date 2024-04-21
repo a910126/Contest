@@ -17,7 +17,7 @@ public class CamControll : MonoBehaviour
     void Update()
     {
         // 按下空格键切换摄像机，并确保只在按下时触发一次事件
-        if (Input.GetKeyDown(KeyCode.Space) && !spacePressed)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && !spacePressed)
         {
             spacePressed = true; // 设置空格键按下标志为true
 
@@ -35,7 +35,7 @@ public class CamControll : MonoBehaviour
             }
         }
         // 松开空格键时重置按键状态
-        else if (Input.GetKeyUp(KeyCode.Space))
+        else if (Input.GetKeyUp(KeyCode.LeftShift))
         {
             spacePressed = false; // 设置空格键按下标志为false
         }

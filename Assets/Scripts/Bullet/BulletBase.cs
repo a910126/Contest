@@ -37,7 +37,8 @@ public class BulletBase : MonoBehaviour
     private void Move()  //子弹的移动
     {
         this.transform.Translate(this.gameObject.transform.forward * Time.deltaTime * Speed);
-    }
+        print(this.gameObject.transform.forward);
+            }
     public void Destory()  //子弹的销毁
     {
         StartCoroutine(DestoryBullet());

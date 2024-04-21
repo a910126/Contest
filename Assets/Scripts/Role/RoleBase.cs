@@ -164,11 +164,12 @@ public abstract class RoleBase :MonoBehaviour  //所有人物的基类
     /// </summary>
     public abstract void Atk();
 
-    protected void CreatePrefab(string name,Vector3 pos)  //动态加载  预设体名字必须要与脚本名字相同
+    protected void CreatePrefab(string name,Vector3 pos,Quaternion rotation)  //动态加载  预设体名字必须要与脚本名字相同
     {
         PoolMgr.GetInstance().GetObj(JudgePrefab(name), (GameObject obj) =>
          {
              obj.transform.position = pos;
+             obj.transform.rotation = rotation;
              //利用反射去调用  
              Type type = Type.GetType(name);
              Component component = obj.GetComponent(type);

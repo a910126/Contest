@@ -17,7 +17,7 @@ public class Monster2_LongRange : RoleBase
     }
     public override void Atk()
     {
-        CreatePrefab("Monster2_Bullet", this.gameObject.transform.position+Vector3.left, Quaternion.LookRotation(this.transform.forward));
+        CreatePrefab("Monster2_Bullet", this.gameObject.transform.position+Vector3.left,this.transform.rotation);
     }
 
     public override void Hurt()

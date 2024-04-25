@@ -11,7 +11,8 @@ public class Player : RoleBase
         a=2,
         b=3
     }
-
+    // 子弹预制体路径
+    
     // 当前状态
     private State currentState = State.a;
     /// <summary>
@@ -39,6 +40,7 @@ public class Player : RoleBase
     private bool isGrounded;
     private Rigidbody rb;
 
+    bool pause = false;
 
 
     protected override void Awake()
@@ -52,11 +54,10 @@ public class Player : RoleBase
         Rotatespeed = 30;  //转动速度
         IsDead = false;
         Hp = 100;      // 假设玩家的初始血量是100
-    }
-    void Start()
-    {
         rb = GetComponent<Rigidbody>();
     }
+    
+
     void OnDestroy()
     {
        
@@ -64,15 +65,16 @@ public class Player : RoleBase
 
     protected override void Update()
     {
-        Move();  //移动
+        if (!pause)
+        {
+            Move();  //移动
 
-        Jump();  //跳跃
-        
-        Rotate();  //转动
+            Jump();  //跳跃
 
-        Atk();  //攻击
+            Rotate();  //转动
 
-        hpImage.fillAmount=Hp/100f;  // 更新血条
+            Atk();  //攻击
+        }
 
     }
 
@@ -111,8 +113,11 @@ public class Player : RoleBase
         }
     }
 
+   
+    private float shootingInterval = 0.3f; // 射击间隔
     private bool isShooting = false; // 是否正在射击
-    private float shootingInterval = 0.5f; // 射击间隔
+    private float lastClickTime = 0f; // 上一次点击的时间
+
 
     public void BulletAtk()
     {
@@ -121,24 +126,27 @@ public class Player : RoleBase
 
         if (Input.GetMouseButtonDown(0)) // 检测玩家是否点击了鼠标左键
         {
-            isShooting = true;
-            StartCoroutine(ShootBullets());
-        }
-
-        if (Input.GetMouseButtonUp(0)) // 检测玩家是否释放了鼠标左键
-        {
-            isShooting = false;
+            float currentTime = Time.time;
+            if (currentTime - lastClickTime > shootingInterval)
+            {
+                lastClickTime = currentTime; // 更新上次点击时间
+                CreatePrefab("Player_Bullet", lineShooter.transform.position,this.transform.rotation);
+                StartCoroutine(ShootBullets()); // 开始发射子弹的协程
+            }
         }
     }
 
     private IEnumerator ShootBullets()
     {
-        while (isShooting)
+        yield return new WaitForSeconds(shootingInterval); // 等待射击间隔
+        while (Input.GetMouseButton(0)) // 检测玩家是否长按鼠标左键
         {
-            CreatePrefab("Player_Bullet", lineShooter.transform.position, Quaternion.LookRotation(lineShooter.transform.forward));
+            CreatePrefab("Player_Bullet", lineShooter.transform.position,this.transform.rotation);
+            //, Quaternion.LookRotation(lineShooter.transform.forward)
             yield return new WaitForSeconds(shootingInterval); // 等待射击间隔
         }
     }
+
     public void LaserAtk()
     {
         print("武器换成激光");
@@ -330,6 +338,8 @@ void OnTwo(){
         EventCenter.GetInstance().AddEventListener("Two", OnTwo);
         EventCenter.GetInstance().AddEventListener<KeyCode>("SomeKeyDown", CheckKeyDown);
         EventCenter.GetInstance().AddEventListener<KeyCode>("SomeKeyUp", CheckKeyUp);
+        EventCenter.GetInstance().AddEventListener("暂停游戏",PauseGame);
+
     }
 
     /// <summary>
@@ -343,6 +353,7 @@ void OnTwo(){
         EventCenter.GetInstance().RemoveEventListener("Two", OnTwo);
         EventCenter.GetInstance().RemoveEventListener<KeyCode>("SomeKeyDown", CheckKeyDown);
         EventCenter.GetInstance().RemoveEventListener<KeyCode>("SomeKeyUp", CheckKeyUp);
+        EventCenter.GetInstance().RemoveEventListener("暂停游戏",PauseGame);
     }
     #endregion
 
@@ -405,4 +416,13 @@ void OnTwo(){
         }
     }
     #endregion
+
+    public void PauseGame()
+    {
+        pause = !pause;
+    }
+
 }
+
+
+  

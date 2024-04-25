@@ -4,76 +4,90 @@ using UnityEngine;
 
 public class BulletBase : MonoBehaviour
 {
-    private Vector3 dir;
-    private Rigidbody rb;
-    /// <summary>
-    /// 子弹的速度
-    /// </summary>
+    
+    protected Rigidbody rb;
     protected float Speed;
-
-    /// <summary>
-    /// 子弹的伤害
-    /// </summary>
     public float Damage;
-
-    /// <summary>
-    /// 子弹销毁时间
-    /// </summary>
     protected float DestoryTime;
-
-    /// <summary>
-    /// 子弹自己的名字
-    /// </summary>
     protected string Name;
+    public LayerMask collisionLayer;
 
     protected virtual void Awake()
     {
         Name = this.gameObject.name;
         rb = GetComponent<Rigidbody>();
-        dir = this.gameObject.transform.forward;
+       
+    }
+
+    protected virtual void OnEnable()
+    {
+        // 当子弹被激活时，重置方向和速度
+        transform.forward = Vector3.forward;
+        rb.velocity = Vector3.zero;
     }
 
     protected virtual void Update()
     {
         Move();
-       
+        // 绘制射线（仅在编辑器中可见）
+        Debug.DrawRay(transform.position, transform.forward * 2f, Color.red, 2f);
     }
 
-    private void Move()  //子弹的移动
+    protected virtual void Move()
     {
-        this.transform.Translate(dir * Time.deltaTime * Speed);
-        
+        rb.velocity = transform.forward * Speed;
+    }
+
+    private void ChangeDirection(Vector3 normal)
+    {
+        // 计算反弹方向
+        Vector3 reflection = Vector3.Reflect(transform.forward, normal);
+        // 设置子弹的方向为反弹方向
+        transform.forward = reflection;
+        rb.velocity = reflection * Speed; // 重新设置速度
+    }
+
+    public void Destroy()
+    {
+        StartCoroutine(DestroyBullet());
+    }
+
+    private IEnumerator DestroyBullet()
+    {
+        yield return new WaitForSeconds(DestoryTime);
+        // 在子弹被推入对象池之前，重置其状态
+        ResetState();
+        PoolMgr.GetInstance().PushObj(Name, this.gameObject);
+    }
+
+    private void ResetState()
+    {
+        // 重置子弹的方向和速度
+        transform.forward = Vector3.forward;
+        rb.velocity = Vector3.zero;
+    }
+
+    private RaycastHit hitInfo;
+    private bool isHitWall = false;
+
+    protected virtual void FixedUpdate()
+    {
+        // 在FixedUpdate中进行射线检测，以保持物理检测的一致性
+        isHitWall = Physics.Raycast(transform.position, transform.forward, out hitInfo, 10f, collisionLayer);
     }
 
     protected virtual void OnTriggerEnter(Collider other)
     {
-        // 检查碰撞到的是不是墙体
-        if (other.CompareTag("wall"))
+        if (isHitWall && other.CompareTag("wall"))
         {
-            print("碰到墙体");
-            // 获取碰撞点的法线，用于计算反射方向
-            Vector3 normal = other.ClosestPoint(transform.position + rb.velocity * Time.deltaTime) - transform.position;
-            normal = normal.normalized;
-
-            // 计算反射方向
-            Vector3 reflectedDirection = Vector3.Reflect(rb.velocity, normal);
-            reflectedDirection.y = 0f; // 保持垂直方向速度不变
-
-            // 更新子弹的速度
-            rb.velocity = reflectedDirection.normalized * Speed;
+            print("碰到墙壁");
+            print("射线击中了: " + hitInfo.collider.name);
+            ChangeDirection(hitInfo.normal);
+            print("传递方向");
+        }
+        else
+        {
+            print("射线没有击中任何物体");
         }
     }
-
-
-    public void Destory()  //子弹的销毁
-    {
-        StartCoroutine(DestoryBullet());
-    }
-
-    private IEnumerator DestoryBullet()
-    {
-        yield return new WaitForSeconds(DestoryTime);
-        PoolMgr.GetInstance().PushObj(name, this.gameObject);
-    }
-
 }

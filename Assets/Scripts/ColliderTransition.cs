@@ -23,6 +23,7 @@ public class ColliderTransition : MonoBehaviour
         if (targetCollider != null)
         {
             targetCollider.enabled = true; // 启用BoxCollider
+            print("EnableTargetCollider");
         }
     }
 
@@ -31,6 +32,7 @@ public class ColliderTransition : MonoBehaviour
         if (targetCollider != null)
         {
             targetCollider.enabled = false; // 启用BoxCollider
+            print("UnenableTargetCollider");
         }
     }
 }

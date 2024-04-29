@@ -7,6 +7,7 @@ TagManager:
   - wall
   - Bullet
   - New tag
+  - Key
   layers:
   - Default
   - TransparentFX

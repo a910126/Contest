@@ -36,6 +36,7 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+     <Compile Include="Assets\KeyTransition.cs" />
      <Compile Include="Assets\Scripts\ALing.cs" />
      <Compile Include="Assets\Scripts\Ai\AiLogic.cs" />
      <Compile Include="Assets\Scripts\Ai\AiStateAtk.cs" />

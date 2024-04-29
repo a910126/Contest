@@ -3,10 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class Player : RoleBase
 {
-    private enum State//23d状态
+    public  enum  State//23d状态
     {
         a=2,
         b=3
@@ -14,7 +15,7 @@ public class Player : RoleBase
     // 子弹预制体路径
     
     // 当前状态
-    private State currentState = State.a;
+    public State currentState = State.a;
     /// <summary>
     /// 记录是第一人称还是第三人称
     /// </summary>
@@ -74,6 +75,8 @@ public class Player : RoleBase
             Rotate();  //转动
 
             Atk();  //攻击
+
+            ChangeCollider();
         }
 
     }
@@ -258,6 +261,11 @@ public class Player : RoleBase
     /// <summary>
     /// 转动
     /// </summary>
+    /// 
+
+
+    private bool hasExecutedA = false; // 用于检查是否已经执行过
+   
     public override void Rotate()
     {
         // 根据当前状态执行相应的方法
@@ -265,10 +273,16 @@ public class Player : RoleBase
         {
             case State.a:
                 TowD();
+                if (!hasExecutedA)
+                {
+                    hasExecutedA = true; 
+                    this.transform.position = new Vector3(this.transform.position.x, transform.position.y, 10);
+                }
                 ui23dTransform.GetComponent<Text>().text = "2D";
                 break;
             case State.b:
                 ThreeD();
+                    hasExecutedA = false;
                 ui23dTransform.GetComponent<Text>().text = "3D";
                 break;
         }
@@ -375,24 +389,8 @@ void OnTwo(){
                 break;
             case KeyCode.L:
                 break;
-            case KeyCode.Space:
-                IsFirst = !IsFirst;
-                if (IsFirst)
-                {
-                    for(int i=0;i<colliderTransition.Length;i++)
-                    {
-                        colliderTransition[i].EnableTargetCollider();
-                    }
-                   
-                }
-                else
-                {
-                    for(int i=0;i<colliderTransition.Length;i++)
-                    {
-                        colliderTransition[i].UnenableTargetCollider();
-                    }
-                   
-                }
+            case KeyCode.LeftShift:
+               
                 break;
         }
     }
@@ -413,6 +411,30 @@ void OnTwo(){
                 break;
             case KeyCode.Space:
                 break;
+        }
+    }
+
+    public Vector3 prePos;
+    private void ChangeCollider(){
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            IsFirst = !IsFirst;
+            print(IsFirst);
+            if (IsFirst)
+            {
+                prePos = transform.position;
+                for (int i = 0; i < colliderTransition.Length; i++)
+                {
+                    colliderTransition[i].EnableTargetCollider();
+                }
+            }
+            else
+            {
+                for (int i = 0; i < colliderTransition.Length; i++)
+                {
+                    colliderTransition[i].UnenableTargetCollider();
+                }
+            }
         }
     }
     #endregion

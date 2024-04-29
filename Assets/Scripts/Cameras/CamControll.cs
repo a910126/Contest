@@ -16,6 +16,7 @@ public class CamControll : MonoBehaviour
 
     void Update()
     {
+       
         // 按下空格键切换摄像机，并确保只在按下时触发一次事件
         if (Input.GetKeyDown(KeyCode.LeftShift) && !spacePressed)
         {

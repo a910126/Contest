@@ -80,14 +80,11 @@ public class BulletBase : MonoBehaviour
     {
         if (isHitWall && other.CompareTag("wall"))
         {
-            print("碰到墙壁");
-            print("射线击中了: " + hitInfo.collider.name);
             ChangeDirection(hitInfo.normal);
-            print("传递方向");
         }
         else
         {
-            print("射线没有击中任何物体");
+           
         }
     }
 }

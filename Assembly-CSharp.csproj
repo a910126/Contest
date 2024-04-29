@@ -36,7 +36,6 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\KeyTransition.cs" />
      <Compile Include="Assets\Scripts\ALing.cs" />
      <Compile Include="Assets\Scripts\Ai\AiLogic.cs" />
      <Compile Include="Assets\Scripts\Ai\AiStateAtk.cs" />
@@ -52,6 +51,7 @@
      <Compile Include="Assets\Scripts\ColliderTransition.cs" />
      <Compile Include="Assets\Scripts\Controller\BulletController.cs" />
      <Compile Include="Assets\Scripts\Controller\LaserController.cs" />
+     <Compile Include="Assets\Scripts\Game_1Controller.cs" />
      <Compile Include="Assets\Scripts\Gamemanager.cs" />
      <Compile Include="Assets\Scripts\Laser\LaserBase.cs" />
      <Compile Include="Assets\Scripts\LineShooter.cs" />
@@ -77,6 +77,7 @@
      <Compile Include="Assets\Scripts\Role\Monster2_LongRange.cs" />
      <Compile Include="Assets\Scripts\Role\Player.cs" />
      <Compile Include="Assets\Scripts\Role\RoleBase.cs" />
+     <Compile Include="Assets\test.cs" />
     <Reference Include="UnityEngine">
         <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.18f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>

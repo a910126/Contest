@@ -48,10 +48,10 @@ public class Player : RoleBase
     {
         AddController();  //开启监控器
 
-         characterController=GetComponent<CharacterController>();
+        characterController=GetComponent<CharacterController>();
+        laserController=GetComponent<LaserController>();
 
-         laserController=GetComponent<LaserController>();
-        Movespeed = 8;  //移动速度
+        Movespeed = 3;  //移动速度
         Rotatespeed = 30;  //转动速度
         IsDead = false;
         Hp = 100;      // 假设玩家的初始血量是100
@@ -64,15 +64,30 @@ public class Player : RoleBase
        
     }
 
-    protected override void Update()
+    void FixedUpdate()
     {
         if (!pause)
         {
             Move();  //移动
 
-            Jump();  //跳跃
+            //Jump();  //跳跃
 
             Rotate();  //转动
+
+            //Atk();  //攻击
+
+            //ChangeCollider();
+        }
+    }
+    protected override void Update()
+    {
+        if (!pause)
+        {
+            //Move();  //移动
+
+            Jump();  //跳跃
+
+           // Rotate();  //转动
 
             Atk();  //攻击
 
@@ -124,9 +139,7 @@ public class Player : RoleBase
 
     public void BulletAtk()
     {
-        //print("武器换成子弹");
         laserController.enabled = false;
-
         if (Input.GetMouseButtonDown(0)) // 检测玩家是否点击了鼠标左键
         {
             float currentTime = Time.time;
@@ -232,14 +245,10 @@ public class Player : RoleBase
         cameraRight.y = 0;
         cameraForward.Normalize();
         cameraRight.Normalize();
-
         // 计算移动方向
         Vector3 moveDirection = horizontal * cameraRight + vertical * cameraForward;
-
         // 应用移动
         rb.MovePosition(transform.position + moveDirection * Movespeed *2* Time.deltaTime);
-
-
     }
     #endregion
 
@@ -248,7 +257,6 @@ public class Player : RoleBase
     {
         // 检测玩家是否接触地面
         isGrounded = Physics.Raycast(transform.position, -Vector3.up, 1f);
-
         // 如果玩家接触地面并且按下跳跃键，则应用向上的力
         if (isGrounded && Input.GetButtonDown("Jump"))
         {
@@ -265,7 +273,7 @@ public class Player : RoleBase
 
 
     private bool hasExecutedA = false; // 用于检查是否已经执行过
-   
+    private bool hasExecutedB = false;
     public override void Rotate()
     {
         // 根据当前状态执行相应的方法
@@ -276,30 +284,54 @@ public class Player : RoleBase
                 if (!hasExecutedA)
                 {
                     hasExecutedA = true; 
-                    this.transform.position = new Vector3(this.transform.position.x, transform.position.y, 10);
+                    hasExecutedB = false;
+                    Invoke("DelayedMoveAndFade", 1.2f);
                 }
                 ui23dTransform.GetComponent<Text>().text = "2D";
                 break;
             case State.b:
                 ThreeD();
+                if (!hasExecutedB)
+                {
                     hasExecutedA = false;
+                    hasExecutedB = true;
+                    ChangePlayerPos(transform.position.x, transform.position.y);
+                    transform.position = new Vector3(transform.position.x, transform.position.y, z);
+                }
                 ui23dTransform.GetComponent<Text>().text = "3D";
                 break;
         }
     }
 
- 
+    private void DelayedMoveAndFade()
+    {
+        // 一秒后执行MoveAndFade
+        MoveAndFade(new Vector3(transform.position.x, transform.position.y, 10), 2f);
+    }
+    public void MoveAndFade(Vector3 targetPosition, float duration)
+    {
+        // 立刻移动到指定位置
+        transform.position = targetPosition;
+        transform.DOPunchPosition(new Vector3(0.5f, 0, 0), 0.5f, 10, 1);
 
-void OnTwo(){
+        foreach (MeshRenderer renderer in GetComponentsInChildren<MeshRenderer>())
+        {
+            Material material = renderer.material;
+
+            material.DOFade(0, duration);
+        }
+        
+    }
+
+
+    void OnTwo(){
         currentState = State.b;
-        //print("qiehuan 111");
     }
 
     // 当摄像机优先级改变时执行的方法
     void Onthree()
     {
         currentState = State.a;
-        //print("qiehuan 222");
     }
 
 
@@ -419,7 +451,6 @@ void OnTwo(){
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             IsFirst = !IsFirst;
-            print(IsFirst);
             if (IsFirst)
             {
                 prePos = transform.position;
@@ -443,6 +474,76 @@ void OnTwo(){
     {
         pause = !pause;
     }
+
+    #region 针对第一场景的主角变换坐标的方法
+    
+    public float z;
+    public void ChangePlayerPos(float x, float y)
+    {
+        z=transform.position.z;
+        if (x > 0 && x < 5)
+        {
+            if (y < 2 && y > 0)
+            {
+               print("第一阶段");
+            }
+        }
+
+        if (x > 5 && x < 10)
+        {
+            if (y < 5 && y > 0)
+            {
+                z = 15;
+                print("第二阶段");
+            }
+        }
+
+        if (x > 10 && x < 22)
+        {
+            if (y < 6.5 && y > 5)
+            {
+                z = 15;
+                print("第三阶段");
+            }
+        }
+
+        if (x > 22 && x < 28)
+        {
+            if (y < 7.5 && y > 5.7)
+            {
+                z = 28;
+                print("第四阶段");
+            }
+        }
+
+        if (x > 28 && x < 41)
+        {
+            if (y < 10 && y > 8)
+            {
+                z = 40;
+                print("第五阶段");
+            }
+        }
+
+        if (x > 41 && x < 49)
+        {
+            if (y < 12 && y > 8.5)
+            {
+                z = 45;
+                print("第六阶段");
+            }
+        }
+
+        if (x > 49 && x < 70)
+        {
+            if (y < 15 && y > 12)
+            {
+                z = 28;
+                print("第七阶段");
+            }
+        }
+    }
+    #endregion
 
 }
 

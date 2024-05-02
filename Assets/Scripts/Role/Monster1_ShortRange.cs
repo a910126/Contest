@@ -12,7 +12,7 @@ public class Monster1_ShortRange : RoleBase
         this.DisToAtk = 2;
         this.DisToBack = 20;
         this.AtkTime = 2;
-        this.BornPos = new Vector3(0, 10, 0);
+        this.BornPos = new Vector3(15, 3, 12);
         base.Awake();
         Ai = new AiLogic(this);    
        

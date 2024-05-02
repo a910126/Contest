@@ -106,6 +106,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 250c0ae311621c5429e4eae843fb9530, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AtkTime: 0
   MonsterRange: 0
   DisToAtk: 0
   DisToBack: 0

@@ -11,7 +11,7 @@ using DG.Tweening;
 
 public class MainMenuPanel : BasePanel
 {
-    string sceneName = "Game";
+    string sceneName = "Game_1";
     private VideoPlayer video;
     public GameObject SkipButton;
     protected override void Awake()

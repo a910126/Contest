@@ -7,6 +7,7 @@ using DG.Tweening;
 
 public class Player : RoleBase
 {
+    public Animator animator;
     public  enum  State//23d状态
     {
         a=2,
@@ -201,9 +202,10 @@ public class Player : RoleBase
         Debug.Log("Player is dead.");
     }
 
-#endregion
+    #endregion
 
     #region 移动
+    private const string MoveParam = "IsWalk";
     protected void Move()
     {
         // // 获取基于屏幕的方向移动输入
@@ -249,6 +251,18 @@ public class Player : RoleBase
         Vector3 moveDirection = horizontal * cameraRight + vertical * cameraForward;
         // 应用移动
         rb.MovePosition(transform.position + moveDirection * Movespeed *2* Time.deltaTime);
+
+
+        if (rb.velocity.magnitude > 1.2f)
+        {
+            print("速度快");
+            animator.SetBool(MoveParam, true);
+        }
+        else
+        {
+            // 如果没有移动输入，则暂停动画
+            animator.SetBool(MoveParam, false);
+        }
     }
     #endregion
 

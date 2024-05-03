@@ -69,9 +69,9 @@ public class LaserController : MonoBehaviour
     private void ReleaseLaser()
     {
         // 实例化激光预制体
-        GameObject laser = Instantiate(laserPrefab, transform.position, transform.rotation);
+        GameObject laser = Instantiate(laserPrefab, transform.position+new Vector3(0,3,0), transform.rotation);
         // 根据蓄力时间来调整激光的长度
-        laser.transform.localScale = new Vector3(laser.transform.localScale.x, laser.transform.localScale.y, chargeTime * 10f);
+        laser.transform.localScale = new Vector3(laser.transform.localScale.x, laser.transform.localScale.y, chargeTime * 2f);
         // 销毁激光，或者让它自然消失
         Destroy(laser, chargeTime + 1f);
     }

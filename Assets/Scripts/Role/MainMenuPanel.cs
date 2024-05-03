@@ -44,6 +44,7 @@ public class MainMenuPanel : BasePanel
     {
        
         video.Play();
+        GameObject.Find("Image").SetActive(false);
         GameObject.Find("StartGameButton").SetActive(false);
         GameObject.Find("ContinueGameButton").SetActive(false);
         GameObject.Find("ExitGameButton").SetActive(false);
